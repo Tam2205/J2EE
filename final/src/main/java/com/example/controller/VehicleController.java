@@ -13,8 +13,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.model.Vehicle;
 import com.example.model.VehicleRental;
+import com.example.service.ActivityLogService;
 import com.example.service.BookingService;
 import com.example.service.VehicleService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/vehicles")
@@ -25,6 +28,9 @@ public class VehicleController {
 
     @Autowired
     private BookingService bookingService;
+
+    @Autowired
+    private ActivityLogService activityLogService;
 
     @GetMapping
     public String vehicles(Model model) {
@@ -38,28 +44,32 @@ public class VehicleController {
     public String rentVehicle(@RequestParam String vehicleId,
                               @RequestParam String bookingId,
                               @RequestParam double totalAmount,
-                              RedirectAttributes redirectAttributes) {
+                              RedirectAttributes redirectAttributes,
+                              HttpServletRequest request) {
         VehicleRental rental = new VehicleRental();
         rental.setVehicleId(vehicleId);
         rental.setBookingId(bookingId);
         rental.setTotalAmount(totalAmount);
 
         vehicleService.createRental(rental);
+        activityLogService.log("VEHICLE_RENT", "Cho thue xe may (vehicleId: " + vehicleId + ") cho booking " + bookingId, request);
         redirectAttributes.addFlashAttribute("success", "Cho thue xe may thanh cong!");
         return "redirect:/vehicles";
     }
 
     @PostMapping("/return/{id}")
-    public String returnVehicle(@PathVariable String id, RedirectAttributes redirectAttributes) {
+    public String returnVehicle(@PathVariable String id, RedirectAttributes redirectAttributes, HttpServletRequest request) {
         vehicleService.returnVehicle(id);
+        activityLogService.log("VEHICLE_RETURN", "Tra xe may (rentalId: " + id + ")", request);
         redirectAttributes.addFlashAttribute("success", "Tra xe may thanh cong!");
         return "redirect:/vehicles";
     }
 
     @PostMapping("/add")
-    public String addVehicle(@ModelAttribute Vehicle vehicle, RedirectAttributes redirectAttributes) {
+    public String addVehicle(@ModelAttribute Vehicle vehicle, RedirectAttributes redirectAttributes, HttpServletRequest request) {
         vehicle.setStatus("AVAILABLE");
         vehicleService.save(vehicle);
+        activityLogService.log("VEHICLE_ADD", "Them xe may: " + vehicle.getName() + " (" + vehicle.getLicensePlate() + ")", request);
         redirectAttributes.addFlashAttribute("success", "Them xe may thanh cong!");
         return "redirect:/vehicles";
     }
