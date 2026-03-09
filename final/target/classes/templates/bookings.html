@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Danh sach dat phong')}"></head>
+<body>
+<div class="wrapper">
+    <nav th:replace="~{fragments :: sidebar('bookings')}"></nav>
+
+    <div class="main-content">
+        <div class="content-header d-flex justify-content-between align-items-center">
+            <h4><i class="bi bi-calendar-check"></i> Danh sach dat phong</h4>
+            <a th:href="@{/bookings/new}" class="btn btn-primary">
+                <i class="bi bi-plus"></i> Dat phong moi
+            </a>
+        </div>
+
+        <!-- Flash messages -->
+        <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <span th:text="${success}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <!-- Status Filter -->
+        <div class="mb-3">
+            <a th:href="@{/bookings(status='ACTIVE')}" class="btn btn-sm"
+               th:classappend="${currentStatus == 'ACTIVE' ? 'btn-danger' : 'btn-outline-danger'}">
+                <i class="bi bi-circle-fill"></i> Dang hoat dong
+            </a>
+            <a th:href="@{/bookings(status='COMPLETED')}" class="btn btn-sm"
+               th:classappend="${currentStatus == 'COMPLETED' ? 'btn-success' : 'btn-outline-success'}">
+                <i class="bi bi-check-circle"></i> Da tra phong
+            </a>
+            <a th:href="@{/bookings(status='CANCELLED')}" class="btn btn-sm"
+               th:classappend="${currentStatus == 'CANCELLED' ? 'btn-secondary' : 'btn-outline-secondary'}">
+                <i class="bi bi-x-circle"></i> Da huy
+            </a>
+        </div>
+
+        <div class="card-custom">
+            <div class="card-body">
+                <div th:if="${#lists.isEmpty(bookings)}" class="text-center text-muted py-4">
+                    <i class="bi bi-inbox" style="font-size:48px;"></i>
+                    <p>Khong co dat phong nao</p>
+                </div>
+
+                <div class="table-responsive" th:if="${!#lists.isEmpty(bookings)}">
+                    <table class="table table-custom table-hover">
+                        <thead>
+                        <tr>
+                            <th>Phong</th>
+                            <th>Khach hang</th>
+                            <th>SDT</th>
+                            <th>Check-in</th>
+                            <th>Check-out</th>
+                            <th>Loai</th>
+                            <th>Tong tien</th>
+                            <th>Trang thai</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="b : ${bookings}">
+                            <td><span class="badge bg-dark" th:text="${b.roomNumber}">P101</span></td>
+                            <td th:text="${b.guestName}">Guest</td>
+                            <td th:text="${b.guestPhone}">Phone</td>
+                            <td th:text="${#temporals.format(b.checkIn, 'dd/MM/yyyy HH:mm')}">01/01 14:00</td>
+                            <td th:text="${#temporals.format(b.checkOut, 'dd/MM/yyyy HH:mm')}">02/01 12:00</td>
+                            <td>
+                                <span class="badge" th:classappend="${b.bookingType == 'HOURLY' ? 'bg-warning text-dark' : 'bg-info'}"
+                                      th:text="${b.bookingType == 'HOURLY' ? 'Theo gio' : 'Theo dem'}">Type</span>
+                            </td>
+                            <td class="fw-bold" th:text="${#numbers.formatDecimal(b.totalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'">0</td>
+                            <td>
+                                <span class="badge"
+                                      th:classappend="${b.status == 'ACTIVE' ? 'bg-danger' : (b.status == 'COMPLETED' ? 'bg-success' : 'bg-secondary')}"
+                                      th:text="${b.status == 'ACTIVE' ? 'Dang thue' : (b.status == 'COMPLETED' ? 'Da tra' : 'Da huy')}">Status</span>
+                            </td>
+                            <td>
+                                <a th:href="@{/bookings/{id}(id=${b.id})}" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <form th:if="${b.status == 'ACTIVE'}"
+                                      th:action="@{/bookings/{id}/checkout(id=${b.id})}" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-warning"
+                                            onclick="return confirm('Xac nhan tra phong?')">
+                                        <i class="bi bi-box-arrow-right"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments :: scripts}"></div>
+</body>
+</html>
