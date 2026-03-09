@@ -1,14 +1,15 @@
 package com.example.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
 import com.example.model.AdditionalService;
 import com.example.model.Room;
 import com.example.model.Vehicle;
 import com.example.repository.AdditionalServiceRepository;
 import com.example.repository.RoomRepository;
 import com.example.repository.VehicleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
@@ -48,13 +49,14 @@ public class DataInitializer implements CommandLineRunner {
             }
         }
 
-        createVehicle("Toyota Camry", "CAR", "51A-123.45", 1500000, 250000, "Sedan 5 cho");
-        createVehicle("Honda City", "CAR", "51A-678.90", 1200000, 200000, "Sedan 5 cho");
-        createVehicle("Honda SH 150i", "MOTORBIKE", "59-A1-12345", 250000, 50000, "Xe may tay ga");
-        createVehicle("Yamaha NVX 155", "MOTORBIKE", "59-B2-67890", 200000, 40000, "Xe may tay ga");
-        createVehicle("VinFast Klara S", "ELECTRIC_SCOOTER", "59-C3-11111", 180000, 35000, "Xe may dien");
-        createVehicle("Giant Escape 3", "BICYCLE", "N/A", 80000, 20000, "Xe dap the thao");
-        createVehicle("Trek FX 1", "BICYCLE", "N/A", 60000, 15000, "Xe dap duong pho");
+        createVehicle("Honda SH 150i", "MOTORBIKE", "59-A1-12345", 250000, 50000, "Xe tay ga cao cap");
+        createVehicle("Yamaha NVX 155", "MOTORBIKE", "59-B2-67890", 200000, 40000, "Xe tay ga the thao");
+        createVehicle("Honda Air Blade", "MOTORBIKE", "59-C3-11111", 180000, 35000, "Xe tay ga pho thong");
+        createVehicle("Honda Vision", "MOTORBIKE", "59-D4-22222", 150000, 30000, "Xe tay ga tiet kiem");
+        createVehicle("Yamaha Exciter 155", "MOTORBIKE", "59-E5-33333", 220000, 45000, "Xe so the thao");
+        createVehicle("Honda Wave Alpha", "MOTORBIKE", "59-F6-44444", 120000, 25000, "Xe so pho thong");
+        createVehicle("Honda Lead 125", "MOTORBIKE", "59-G7-55555", 170000, 35000, "Xe tay ga nhe");
+        createVehicle("Yamaha Janus", "MOTORBIKE", "59-H8-66666", 160000, 30000, "Xe tay ga thoi trang");
 
         createService("Giat ui", 100000, "Giat ui quan ao", "LAUNDRY");
         createService("Spa & Massage", 500000, "Dich vu spa va massage thu gian", "SPA");

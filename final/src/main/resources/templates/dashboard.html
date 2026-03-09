@@ -62,10 +62,10 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <div class="stat-value text-info" th:text="${activeVehicleRentals}">0</div>
-                            <div class="stat-label">Xe dang cho thue</div>
+                            <div class="stat-label">Xe may dang cho thue</div>
                         </div>
                         <div class="stat-icon bg-info">
-                            <i class="bi bi-car-front"></i>
+                            <i class="bi bi-scooter"></i>
                         </div>
                     </div>
                 </div>
@@ -152,11 +152,11 @@
             <div class="col-lg-5">
                 <div class="card-custom mb-4">
                     <div class="card-header">
-                        <i class="bi bi-car-front"></i> Xe dang cho thue
+                        <i class="bi bi-scooter"></i> Xe may dang cho thue
                     </div>
                     <div class="card-body">
                         <div th:if="${#lists.isEmpty(activeRentals)}" class="text-muted text-center py-3">
-                            Khong co xe nao dang cho thue
+                            Khong co xe may nao dang cho thue
                         </div>
                         <div th:each="r : ${activeRentals}" class="vehicle-card rented mb-2">
                             <div class="d-flex justify-content-between">

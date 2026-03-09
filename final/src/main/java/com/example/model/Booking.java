@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Document(collection = "bookings")
 public class Booking {
@@ -17,7 +18,9 @@ public class Booking {
     private String guestName;
     private String guestPhone;
     private String guestIdCard;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime checkIn;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime checkOut;
     private String bookingType;
     private int hoursBooked;

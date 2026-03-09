@@ -70,23 +70,23 @@
                         <div id="nightlyFields">
                             <div class="mb-3">
                                 <label class="form-label">Check-in (mac dinh 14:00)</label>
-                                <input type="datetime-local" class="form-control" th:field="*{checkIn}">
+                                <input type="datetime-local" class="form-control" th:field="*{checkIn}" id="checkIn">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Check-out (mac dinh 12:00)</label>
-                                <input type="datetime-local" class="form-control" th:field="*{checkOut}">
+                                <input type="datetime-local" class="form-control" th:field="*{checkOut}" id="checkOut">
                             </div>
                         </div>
 
                         <div id="hourlyFields" style="display:none;">
                             <div class="mb-3">
                                 <label class="form-label">Thoi gian bat dau</label>
-                                <input type="datetime-local" class="form-control" th:field="*{checkIn}">
+                                <input type="datetime-local" class="form-control" id="hourlyCheckIn" name="hourlyCheckIn">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">So gio thue</label>
                                 <input type="number" class="form-control" th:field="*{hoursBooked}"
-                                       min="1" max="24" value="1">
+                                       id="hoursBooked" min="1" max="24" value="1">
                             </div>
                         </div>
                     </div>
@@ -115,9 +115,31 @@
         var nightly = document.getElementById('typeNightly').checked;
         document.getElementById('nightlyFields').style.display = nightly ? 'block' : 'none';
         document.getElementById('hourlyFields').style.display = nightly ? 'none' : 'block';
+
+        // Disable hidden fields so browser skips their validation
+        document.getElementById('checkIn').disabled = !nightly;
+        document.getElementById('checkOut').disabled = !nightly;
+        document.getElementById('hourlyCheckIn').disabled = nightly;
+        document.getElementById('hoursBooked').disabled = nightly;
     }
-    // Initialize on page load
-    document.addEventListener('DOMContentLoaded', toggleBookingType);
+
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleBookingType();
+
+        var form = document.querySelector('form');
+        form.addEventListener('submit', function() {
+            var nightly = document.getElementById('typeNightly').checked;
+            if (!nightly) {
+                // Re-enable checkIn so its value is submitted
+                document.getElementById('checkIn').disabled = false;
+                document.getElementById('checkIn').value = document.getElementById('hourlyCheckIn').value;
+                document.getElementById('checkOut').disabled = false;
+                document.getElementById('checkOut').value = '';
+            }
+            // Re-enable hoursBooked so its value is submitted
+            document.getElementById('hoursBooked').disabled = false;
+        });
+    });
 </script>
 </body>
 </html>

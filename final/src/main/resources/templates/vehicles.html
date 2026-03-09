@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments :: head('Cho thue xe')}"></head>
+<head th:replace="~{fragments :: head('Cho thue xe may')}"></head>
 <body>
 <div class="wrapper">
     <nav th:replace="~{fragments :: sidebar('vehicles')}"></nav>
 
     <div class="main-content">
         <div class="content-header">
-            <h4><i class="bi bi-car-front"></i> Quan ly cho thue xe</h4>
+            <h4><i class="bi bi-scooter"></i> Quan ly cho thue xe may</h4>
         </div>
 
         <!-- Flash messages -->
@@ -21,9 +21,9 @@
             <div class="col-lg-7">
                 <div class="card-custom mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-list-ul"></i> Danh sach xe</span>
+                        <span><i class="bi bi-list-ul"></i> Danh sach xe may</span>
                         <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addVehicleModal">
-                            <i class="bi bi-plus"></i> Them xe
+                            <i class="bi bi-plus"></i> Them xe may
                         </button>
                     </div>
                     <div class="card-body">
@@ -31,8 +31,7 @@
                             <table class="table table-custom table-hover">
                                 <thead>
                                 <tr>
-                                    <th>Xe</th>
-                                    <th>Loai</th>
+                                    <th>Xe may</th>
                                     <th>Bien so</th>
                                     <th>Gia/ngay</th>
                                     <th>Gia/gio</th>
@@ -41,10 +40,7 @@
                                 </thead>
                                 <tbody>
                                 <tr th:each="v : ${vehicles}">
-                                    <td><strong th:text="${v.name}">Vehicle</strong></td>
-                                    <td>
-                                        <span class="badge bg-secondary" th:text="${v.type}">Type</span>
-                                    </td>
+                                    <td><strong th:text="${v.name}">Vehicle</strong><br><small class="text-muted" th:text="${v.description}">Desc</small></td>
                                     <td th:text="${v.licensePlate}">Plate</td>
                                     <td th:text="${#numbers.formatDecimal(v.pricePerDay, 0, 'COMMA', 0, 'POINT')}">0</td>
                                     <td th:text="${#numbers.formatDecimal(v.pricePerHour, 0, 'COMMA', 0, 'POINT')}">0</td>
@@ -63,7 +59,7 @@
                 <!-- Rent Vehicle Form -->
                 <div class="card-custom mb-4" th:if="${!#lists.isEmpty(activeBookings)}">
                     <div class="card-header">
-                        <i class="bi bi-car-front"></i> Cho thue xe cho khach
+                        <i class="bi bi-scooter"></i> Cho thue xe may cho khach
                     </div>
                     <div class="card-body">
                         <form th:action="@{/vehicles/rent}" method="post">
@@ -108,12 +104,12 @@
             <div class="col-lg-5">
                 <div class="card-custom mb-4">
                     <div class="card-header">
-                        <i class="bi bi-clock-history"></i> Xe dang cho thue
+                        <i class="bi bi-clock-history"></i> Xe may dang cho thue
                         <span class="badge bg-danger ms-2" th:text="${#lists.size(activeRentals)}">0</span>
                     </div>
                     <div class="card-body">
                         <div th:if="${#lists.isEmpty(activeRentals)}" class="text-muted text-center py-3">
-                            Khong co xe nao dang cho thue
+                            Khong co xe may nao dang cho thue
                         </div>
                         <div th:each="r : ${activeRentals}" class="vehicle-card rented mb-3">
                             <div class="d-flex justify-content-between align-items-start">
@@ -151,26 +147,18 @@
         <div class="modal-content">
             <form th:action="@{/vehicles/add}" method="post">
                 <div class="modal-header">
-                    <h5 class="modal-title">Them xe moi</h5>
+                    <h5 class="modal-title">Them xe may moi</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label">Ten xe</label>
+                        <label class="form-label">Ten xe may</label>
                         <input type="text" name="name" class="form-control" required placeholder="VD: Honda SH 150i">
                     </div>
+                    <input type="hidden" name="type" value="MOTORBIKE">
                     <div class="mb-3">
-                        <label class="form-label">Loai xe</label>
-                        <select name="type" class="form-select" required>
-                            <option value="CAR">O to</option>
-                            <option value="MOTORBIKE">Xe may</option>
-                            <option value="ELECTRIC_SCOOTER">Xe dien</option>
-                            <option value="BICYCLE">Xe dap</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Bien so</label>
-                        <input type="text" name="licensePlate" class="form-control" placeholder="VD: 51A-123.45">
+                        <label class="form-label">Bien so xe</label>
+                        <input type="text" name="licensePlate" class="form-control" required placeholder="VD: 59-A1-12345">
                     </div>
                     <div class="row">
                         <div class="col-6 mb-3">
@@ -189,7 +177,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huy</button>
-                    <button type="submit" class="btn btn-primary">Them xe</button>
+                    <button type="submit" class="btn btn-primary">Them xe may</button>
                 </div>
             </form>
         </div>

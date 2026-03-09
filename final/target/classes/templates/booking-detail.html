@@ -75,7 +75,7 @@
                                 <strong th:text="${#numbers.formatDecimal(booking.serviceCharge, 0, 'COMMA', 0, 'POINT')}">0</strong>
                             </div>
                             <div class="col-4">
-                                <small class="text-muted">Thue xe</small><br>
+                                <small class="text-muted">Thue xe may</small><br>
                                 <strong th:text="${#numbers.formatDecimal(booking.vehicleCharge, 0, 'COMMA', 0, 'POINT')}">0</strong>
                             </div>
                         </div>
@@ -149,11 +149,11 @@
                 <!-- Vehicle Rentals -->
                 <div class="card-custom mb-4">
                     <div class="card-header">
-                        <i class="bi bi-car-front"></i> Xe da thue
+                        <i class="bi bi-scooter"></i> Xe may da thue
                     </div>
                     <div class="card-body">
                         <div th:if="${#lists.isEmpty(vehicleRentals)}" class="text-muted text-center py-2">
-                            Chua thue xe nao
+                            Chua thue xe may nao
                         </div>
                         <div th:each="vr : ${vehicleRentals}" class="vehicle-card mb-2" th:classappend="${vr.active ? 'rented' : ''}">
                             <div class="d-flex justify-content-between align-items-center">
@@ -174,7 +174,7 @@
 
                         <!-- Rent Vehicle Form -->
                         <div th:if="${booking.status == 'ACTIVE' and !#lists.isEmpty(availableVehicles)}" class="mt-3 border-top pt-3">
-                            <h6 class="text-primary">Thue xe</h6>
+                            <h6 class="text-primary">Thue xe may</h6>
                             <form th:action="@{/vehicles/rent}" method="post">
                                 <input type="hidden" name="bookingId" th:value="${booking.id}">
                                 <div class="row g-2">
@@ -192,7 +192,7 @@
                                     </div>
                                     <div class="col-3">
                                         <button type="submit" class="btn btn-sm btn-success w-100">
-                                            <i class="bi bi-car-front"></i> Thue
+                                            <i class="bi bi-scooter"></i> Thue
                                         </button>
                                     </div>
                                 </div>
