@@ -1,0 +1,6 @@
+Lệnh để chạy
+java -jar target\laca-hotel-1.0-SNAPSHOT.jar
+
+lệnh tắt 
+Get-Process java -ErrorAction SilentlyContinue | Stop-Process -Force
+hoặc ctrl + C
