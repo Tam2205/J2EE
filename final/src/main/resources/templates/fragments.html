@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <!-- HEAD FRAGMENT -->
 <head th:fragment="head(title)">
@@ -33,7 +33,16 @@
         <li th:classappend="${activePage == 'services' ? 'active' : ''}">
             <a th:href="@{/services}"><i class="bi bi-star"></i> <span>Dich vu</span></a>
         </li>
+        <li th:classappend="${activePage == 'activity-logs' ? 'active' : ''}" sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{/activity-logs}"><i class="bi bi-clock-history"></i> <span>Nhat ky</span></a>
+        </li>
     </ul>
+    <div class="sidebar-footer mt-auto p-3 border-top">
+        <small class="text-muted"><i class="bi bi-person-circle"></i> <span sec:authentication="name">User</span></small>
+        <a th:href="@{/logout}" class="btn btn-outline-light btn-sm w-100 mt-2">
+            <i class="bi bi-box-arrow-right"></i> Dang xuat
+        </a>
+    </div>
 </nav>
 
 <!-- SCRIPTS FRAGMENT -->

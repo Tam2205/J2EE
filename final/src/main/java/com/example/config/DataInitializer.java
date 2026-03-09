@@ -2,13 +2,16 @@ package com.example.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.example.model.AdditionalService;
 import com.example.model.Room;
+import com.example.model.User;
 import com.example.model.Vehicle;
 import com.example.repository.AdditionalServiceRepository;
 import com.example.repository.RoomRepository;
+import com.example.repository.UserRepository;
 import com.example.repository.VehicleRepository;
 
 @Component
@@ -22,6 +25,12 @@ public class DataInitializer implements CommandLineRunner {
 
     @Autowired
     private AdditionalServiceRepository serviceRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) {
@@ -69,6 +78,12 @@ public class DataInitializer implements CommandLineRunner {
         createService("Be boi", 0, "Su dung be boi (mien phi)", "FITNESS");
         createService("Giu hanh ly", 50000, "Gui hanh ly sau checkout", "OTHER");
 
+        if (userRepository.count() == 0) {
+            createUser("admin", "admin123", "Quan tri vien", "ADMIN");
+            createUser("staff", "staff123", "Nhan vien Le Tan", "STAFF");
+            System.out.println("==> Da tao tai khoan mac dinh: admin/admin123, staff/staff123");
+        }
+
         System.out.println("==> Da khoi tao du lieu mau cho La Ca Hotel!");
     }
 
@@ -82,6 +97,17 @@ public class DataInitializer implements CommandLineRunner {
         v.setPricePerHour(hourPrice);
         v.setDescription(desc);
         vehicleRepository.save(v);
+    }
+
+    private void createUser(String username, String password, String fullName, String role) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setFullName(fullName);
+        user.setRole(role);
+        user.setActive(true);
+        user.setCreatedAt(java.time.LocalDateTime.now());
+        userRepository.save(user);
     }
 
     private void createService(String name, double price, String desc, String category) {
