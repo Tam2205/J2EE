@@ -10,9 +10,11 @@
                 <h2><i class="bi bi-clock-history"></i> Nhat ky hoat dong</h2>
                 <div>
                     <span class="text-muted" sec:authentication="name">User</span>
-                    <a th:href="@{/logout}" class="btn btn-outline-danger btn-sm ms-2">
-                        <i class="bi bi-box-arrow-right"></i> Dang xuat
-                    </a>
+                    <form th:action="@{/logout}" method="post" class="d-inline ms-2">
+                        <button type="submit" class="btn btn-outline-danger btn-sm">
+                            <i class="bi bi-box-arrow-right"></i> Dang xuat
+                        </button>
+                    </form>
                 </div>
             </div>
 
