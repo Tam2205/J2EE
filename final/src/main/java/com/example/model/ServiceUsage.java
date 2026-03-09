@@ -22,8 +22,5 @@ public class ServiceUsage {
     public double getTotalPrice() { return totalPrice; }
     public void setTotalPrice(double totalPrice) { this.totalPrice = totalPrice; }
     public LocalDateTime getUsageDate() { return usageDate; }
-
-
-
-}    public void setUsageDate(LocalDateTime usageDate) { this.usageDate = usageDate; }    public void setUsageDate(LocalDateTime usageDate) { this.usageDate = usageDate; }
+    public void setUsageDate(LocalDateTime usageDate) { this.usageDate = usageDate; }
 }
