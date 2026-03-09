@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Tong quan')}"></head>
+<body>
+<div class="wrapper">
+    <nav th:replace="~{fragments :: sidebar('dashboard')}"></nav>
+
+    <div class="main-content">
+        <div class="content-header">
+            <h4><i class="bi bi-speedometer2"></i> Tong quan - La Ca Hotel</h4>
+        </div>
+
+        <!-- Flash messages -->
+        <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <span th:text="${success}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="stat-value" th:text="${totalRooms}">50</div>
+                            <div class="stat-label">Tong so phong</div>
+                        </div>
+                        <div class="stat-icon bg-primary">
+                            <i class="bi bi-door-open"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="stat-value text-danger" th:text="${occupiedRooms}">0</div>
+                            <div class="stat-label">Dang cho thue</div>
+                        </div>
+                        <div class="stat-icon bg-danger">
+                            <i class="bi bi-person-fill"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="stat-value text-success" th:text="${availableRooms}">50</div>
+                            <div class="stat-label">Con trong</div>
+                        </div>
+                        <div class="stat-icon bg-success">
+                            <i class="bi bi-check-circle"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="stat-value text-info" th:text="${activeVehicleRentals}">0</div>
+                            <div class="stat-label">Xe dang cho thue</div>
+                        </div>
+                        <div class="stat-icon bg-info">
+                            <i class="bi bi-car-front"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Room Grid by Category -->
+        <div class="card-custom mb-4">
+            <div class="card-header">
+                <i class="bi bi-grid-3x3-gap"></i> Trang thai phong
+            </div>
+            <div class="card-body">
+                <div th:each="entry : ${roomsByCategory}" class="room-category-section">
+                    <h6>
+                        <span class="category-label" th:classappend="'category-' + ${entry.key}" th:text="${entry.key}">STANDARD</span>
+                        <small class="text-muted ms-2"
+                               th:text="'(' + ${#lists.size(entry.value)} + ' phong)'"></small>
+                    </h6>
+                    <div class="room-grid">
+                        <a th:each="room : ${entry.value}"
+                           th:href="@{/rooms/{id}(id=${room.id})}"
+                           th:classappend="${room.status == 'OCCUPIED' ? 'occupied' : (room.status == 'MAINTENANCE' ? 'maintenance' : 'available')}"
+                           class="room-box">
+                            <div class="room-number" th:text="${room.roomNumber}">P101</div>
+                            <div class="room-guest"
+                                 th:if="${room.status == 'OCCUPIED' and roomBookingMap.containsKey(room.id)}"
+                                 th:text="${roomBookingMap.get(room.id).guestName}"></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Active Bookings -->
+            <div class="col-lg-7">
+                <div class="card-custom mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-calendar-check"></i> Dat phong hien tai</span>
+                        <a th:href="@{/bookings/new}" class="btn btn-sm btn-primary">
+                            <i class="bi bi-plus"></i> Dat phong moi
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <div th:if="${#lists.isEmpty(activeBookings)}" class="text-muted text-center py-3">
+                            Khong co dat phong nao dang hoat dong
+                        </div>
+                        <div class="table-responsive" th:if="${!#lists.isEmpty(activeBookings)}">
+                            <table class="table table-custom table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Phong</th>
+                                    <th>Khach</th>
+                                    <th>Check-in</th>
+                                    <th>Check-out</th>
+                                    <th>Loai</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="b : ${activeBookings}">
+                                    <td><span class="badge bg-danger" th:text="${b.roomNumber}">P101</span></td>
+                                    <td th:text="${b.guestName}">Guest</td>
+                                    <td th:text="${#temporals.format(b.checkIn, 'dd/MM HH:mm')}">01/01 14:00</td>
+                                    <td th:text="${#temporals.format(b.checkOut, 'dd/MM HH:mm')}">02/01 12:00</td>
+                                    <td>
+                                        <span class="badge" th:classappend="${b.bookingType == 'HOURLY' ? 'bg-warning text-dark' : 'bg-info'}"
+                                              th:text="${b.bookingType == 'HOURLY' ? 'Theo gio' : 'Theo dem'}">Theo dem</span>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/bookings/{id}(id=${b.id})}" class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Vehicle Rentals -->
+            <div class="col-lg-5">
+                <div class="card-custom mb-4">
+                    <div class="card-header">
+                        <i class="bi bi-car-front"></i> Xe dang cho thue
+                    </div>
+                    <div class="card-body">
+                        <div th:if="${#lists.isEmpty(activeRentals)}" class="text-muted text-center py-3">
+                            Khong co xe nao dang cho thue
+                        </div>
+                        <div th:each="r : ${activeRentals}" class="vehicle-card rented mb-2">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <strong th:text="${r.vehicleName}">Vehicle</strong>
+                                    <br>
+                                    <small class="text-muted" th:text="'BS: ' + ${r.vehicleLicensePlate}">Plate</small>
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge bg-danger" th:text="'Phong ' + ${r.roomNumber}">P101</span>
+                                    <br>
+                                    <small th:text="${r.guestName}">Guest</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments :: scripts}"></div>
+</body>
+</html>
