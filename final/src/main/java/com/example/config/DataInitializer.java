@@ -34,6 +34,13 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        // Tao user mac dinh neu chua co (luon chay, khong phu thuoc room)
+        if (userRepository.count() == 0) {
+            createUser("admin", "admin123", "Quan tri vien", "ADMIN");
+            createUser("staff", "staff123", "Nhan vien Le Tan", "STAFF");
+            System.out.println("==> Da tao tai khoan mac dinh: admin/admin123, staff/staff123");
+        }
+
         if (roomRepository.count() > 0) return;
 
         String[][] categories = {
@@ -77,12 +84,6 @@ public class DataInitializer implements CommandLineRunner {
         createService("Thue ao choang tam", 30000, "Thue ao choang cao cap", "OTHER");
         createService("Be boi", 0, "Su dung be boi (mien phi)", "FITNESS");
         createService("Giu hanh ly", 50000, "Gui hanh ly sau checkout", "OTHER");
-
-        if (userRepository.count() == 0) {
-            createUser("admin", "admin123", "Quan tri vien", "ADMIN");
-            createUser("staff", "staff123", "Nhan vien Le Tan", "STAFF");
-            System.out.println("==> Da tao tai khoan mac dinh: admin/admin123, staff/staff123");
-        }
 
         System.out.println("==> Da khoi tao du lieu mau cho La Ca Hotel!");
     }
