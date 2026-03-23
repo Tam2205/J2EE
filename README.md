@@ -2,7 +2,7 @@
 
 Hệ thống quản lý khách sạn La Ca — ứng dụng web quản lý toàn diện các hoạt động khách sạn bao gồm phòng, đặt phòng, dịch vụ, xe cho thuê và nhật ký hoạt động.
 
-![Java]
+
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.3-brightgreen)
 ![MongoDB](https://img.shields.io/badge/MongoDB-NoSQL-green)
 ![Thymeleaf](https://img.shields.io/badge/Thymeleaf-3.x-blue)
