@@ -11,7 +11,7 @@
                 <i class="bi bi-arrow-left"></i> Quay lai
             </a>
             <h4>
-                <i class="bi bi-door-open"></i> Phong
+                <i class="bi bi-door-open"></i> Phòng
                 <span th:text="${room.roomNumber}">P101</span>
                 <span class="badge ms-2"
                       th:classappend="${room.status == 'AVAILABLE' ? 'bg-success' : (room.status == 'OCCUPIED' ? 'bg-danger' : 'bg-warning text-dark')}"
@@ -23,25 +23,25 @@
             <!-- Room Info -->
             <div class="col-md-4">
                 <div class="card-custom mb-4">
-                    <div class="card-header">Thong tin phong</div>
+                    <div class="card-header">Thông tin phòng</div>
                     <div class="card-body">
-                        <p><strong>Hang phong:</strong>
+                        <p><strong>Loại phòng:</strong>
                             <span class="category-label" th:classappend="'category-' + ${room.category}"
                                   th:text="${room.category}">STANDARD</span>
                         </p>
-                        <p><strong>Tang:</strong> <span th:text="${room.floor}">1</span></p>
-                        <p><strong>Gia/dem:</strong>
+                        <p><strong>Tầng:</strong> <span th:text="${room.floor}">1</span></p>
+                        <p><strong>Giá/đêm:</strong>
                             <span th:text="${#numbers.formatDecimal(room.pricePerNight, 0, 'COMMA', 0, 'POINT')} + ' VND'">500,000</span>
                         </p>
-                        <p><strong>Gia/gio:</strong>
+                        <p><strong>Giá/giờ:</strong>
                             <span th:text="${#numbers.formatDecimal(room.pricePerHour, 0, 'COMMA', 0, 'POINT')} + ' VND'">100,000</span>
                         </p>
-                        <p><strong>Mo ta:</strong> <span th:text="${room.description}">-</span></p>
+                        <p><strong>Mô tả:</strong> <span th:text="${room.description}">-</span></p>
 
                         <a th:if="${room.status == 'AVAILABLE'}"
                            th:href="@{/bookings/new(roomId=${room.id})}"
                            class="btn btn-success w-100 mt-2">
-                            <i class="bi bi-plus"></i> Dat phong nay
+                            <i class="bi bi-plus"></i> Đặt phòng này
                         </a>
                     </div>
                 </div>
@@ -51,15 +51,15 @@
             <div class="col-md-8">
                 <div th:if="${activeBooking != null}" class="card-custom mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-person-fill"></i> Thong tin dat phong hien tai</span>
+                        <span><i class="bi bi-person-fill"></i> Thông tin đặt phòng hiện tại</span>
                         <div>
                             <a th:href="@{/bookings/{id}(id=${activeBooking.id})}" class="btn btn-sm btn-primary">
-                                <i class="bi bi-eye"></i> Chi tiet
+                                <i class="bi bi-eye"></i> Chi tiết
                             </a>
                             <form th:action="@{/bookings/{id}/checkout(id=${activeBooking.id})}" method="post" class="d-inline">
                                 <button type="submit" class="btn btn-sm btn-warning"
-                                        onclick="return confirm('Xac nhan tra phong?')">
-                                    <i class="bi bi-box-arrow-right"></i> Tra phong
+                                        onclick="return confirm('Xác nhận trả phòng?')">
+                                    <i class="bi bi-box-arrow-right"></i> Trả phòng
                                 </button>
                             </form>
                         </div>
@@ -67,7 +67,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <p><strong>Khach:</strong> <span th:text="${activeBooking.guestName}">Guest</span></p>
+                                <p><strong>Khách:</strong> <span th:text="${activeBooking.guestName}">Guest</span></p>
                                 <p><strong>SDT:</strong> <span th:text="${activeBooking.guestPhone}">Phone</span></p>
                                 <p><strong>CCCD:</strong> <span th:text="${activeBooking.guestIdCard}">ID</span></p>
                             </div>
@@ -78,11 +78,11 @@
                                 <p><strong>Check-out:</strong>
                                     <span th:text="${#temporals.format(activeBooking.checkOut, 'dd/MM/yyyy HH:mm')}">Date</span>
                                 </p>
-                                <p><strong>Loai:</strong>
+                                <p><strong>Loại:</strong>
                                     <span class="badge" th:classappend="${activeBooking.bookingType == 'HOURLY' ? 'bg-warning text-dark' : 'bg-info'}"
-                                          th:text="${activeBooking.bookingType == 'HOURLY' ? 'Theo gio' : 'Theo dem'}">Type</span>
+                                          th:text="${activeBooking.bookingType == 'HOURLY' ? 'Theo giờ' : 'Theo đêm'}">Type</span>
                                 </p>
-                                <p><strong>Tong tien:</strong>
+                                <p><strong>Tổng tiền:</strong>
                                     <span class="text-danger fw-bold"
                                           th:text="${#numbers.formatDecimal(activeBooking.totalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'">0</span>
                                 </p>
@@ -91,10 +91,10 @@
 
                         <!-- Services Used -->
                         <div th:if="${!#lists.isEmpty(activeBooking.services)}" class="mt-3">
-                            <h6>Dich vu da su dung:</h6>
+                            <h6>Dịch vụ đã sử dụng:</h6>
                             <table class="table table-sm">
                                 <thead>
-                                <tr><th>Dich vu</th><th>SL</th><th>Don gia</th><th>Thanh tien</th></tr>
+                                <tr><th>Dịch vụ</th><th>SL</th><th>Đơn giá</th><th>Thành tiền</th></tr>
                                 </thead>
                                 <tbody>
                                 <tr th:each="s : ${activeBooking.services}">
@@ -109,11 +109,11 @@
 
                         <!-- Vehicle Rentals -->
                         <div th:if="${vehicleRentals != null and !#lists.isEmpty(vehicleRentals)}" class="mt-3">
-                            <h6>Xe dang thue:</h6>
+                            <h6>Xe đang thuê:</h6>
                             <div th:each="vr : ${vehicleRentals}" class="vehicle-card" th:classappend="${vr.active ? 'rented' : ''}">
                                 <strong th:text="${vr.vehicleName}">Vehicle</strong>
                                 <span class="badge" th:classappend="${vr.active ? 'bg-danger' : 'bg-secondary'}"
-                                      th:text="${vr.active ? 'Dang thue' : 'Da tra'}">Status</span>
+                                      th:text="${vr.active ? 'Đang thuê' : 'Đã trả'}">Status</span>
                                 <br>
                                 <small class="text-muted" th:text="'BS: ' + ${vr.vehicleLicensePlate}">Plate</small>
                             </div>
@@ -124,10 +124,10 @@
                 <div th:if="${activeBooking == null}" class="card-custom mb-4">
                     <div class="card-body text-center text-muted py-5">
                         <i class="bi bi-inbox" style="font-size:48px;"></i>
-                        <p>Phong nay hien dang trong</p>
+                        <p>Phòng này hiện đang trống</p>
                         <a th:if="${room.status == 'AVAILABLE'}"
                            th:href="@{/bookings/new(roomId=${room.id})}" class="btn btn-success">
-                            <i class="bi bi-plus"></i> Dat phong nay
+                            <i class="bi bi-plus"></i> Đặt phòng này
                         </a>
                     </div>
                 </div>

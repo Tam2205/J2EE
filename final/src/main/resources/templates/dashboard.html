@@ -23,7 +23,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <div class="stat-value" th:text="${totalRooms}">50</div>
-                            <div class="stat-label">Tong so phong</div>
+                            <div class="stat-label">Tổng số phòng</div>
                         </div>
                         <div class="stat-icon bg-primary">
                             <i class="bi bi-door-open"></i>
@@ -36,7 +36,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <div class="stat-value text-danger" th:text="${occupiedRooms}">0</div>
-                            <div class="stat-label">Dang cho thue</div>
+                            <div class="stat-label">Đang cho thuê</div>
                         </div>
                         <div class="stat-icon bg-danger">
                             <i class="bi bi-person-fill"></i>
@@ -49,7 +49,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <div class="stat-value text-success" th:text="${availableRooms}">50</div>
-                            <div class="stat-label">Con trong</div>
+                            <div class="stat-label">Còn trống</div>
                         </div>
                         <div class="stat-icon bg-success">
                             <i class="bi bi-check-circle"></i>
@@ -62,7 +62,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <div class="stat-value text-info" th:text="${activeVehicleRentals}">0</div>
-                            <div class="stat-label">Xe may dang cho thue</div>
+                            <div class="stat-label">Xe máy đang cho thuê</div>
                         </div>
                         <div class="stat-icon bg-info">
                             <i class="bi bi-scooter"></i>
@@ -75,7 +75,7 @@
         <!-- Room Grid by Category -->
         <div class="card-custom mb-4">
             <div class="card-header">
-                <i class="bi bi-grid-3x3-gap"></i> Trang thai phong
+                <i class="bi bi-grid-3x3-gap"></i> Trạng thái phòng
             </div>
             <div class="card-body">
                 <div th:each="entry : ${roomsByCategory}" class="room-category-section">
@@ -104,24 +104,24 @@
             <div class="col-lg-7">
                 <div class="card-custom mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-calendar-check"></i> Dat phong hien tai</span>
+                        <span><i class="bi bi-calendar-check"></i> Đặt phòng hiện tại</span>
                         <a th:href="@{/bookings/new}" class="btn btn-sm btn-primary">
-                            <i class="bi bi-plus"></i> Dat phong moi
+                            <i class="bi bi-plus"></i> Đặt phòng mới
                         </a>
                     </div>
                     <div class="card-body">
                         <div th:if="${#lists.isEmpty(activeBookings)}" class="text-muted text-center py-3">
-                            Khong co dat phong nao dang hoat dong
+                            Không có đặt phòng nào đang họat động
                         </div>
                         <div class="table-responsive" th:if="${!#lists.isEmpty(activeBookings)}">
                             <table class="table table-custom table-hover">
                                 <thead>
                                 <tr>
-                                    <th>Phong</th>
-                                    <th>Khach</th>
+                                    <th>Phòng</th>
+                                    <th>Khách</th>
                                     <th>Check-in</th>
                                     <th>Check-out</th>
-                                    <th>Loai</th>
+                                    <th>Loại</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -152,11 +152,11 @@
             <div class="col-lg-5">
                 <div class="card-custom mb-4">
                     <div class="card-header">
-                        <i class="bi bi-scooter"></i> Xe may dang cho thue
+                        <i class="bi bi-scooter"></i> Xe máy đang cho thuê
                     </div>
                     <div class="card-body">
                         <div th:if="${#lists.isEmpty(activeRentals)}" class="text-muted text-center py-3">
-                            Khong co xe may nao dang cho thue
+                            Không có xe máy nào đang cho thuê
                         </div>
                         <div th:each="r : ${activeRentals}" class="vehicle-card rented mb-2">
                             <div class="d-flex justify-content-between">

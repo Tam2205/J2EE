@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Chi tiết khách sạn')}"></head>
+<body>
+<div class="hotel-detail-layout">
+    <div class="hotel-detail-header">
+        <div>
+            <p class="hotel-label">Khách sạn</p>
+            <h1 th:text="${hotelName}">La Ca Hotel Dalat</h1>
+            <p class="hotel-subtitle" th:text="${hotelLocation}">Đà Lạt, Lâm Đồng</p>
+            <div class="hotel-rating">
+                <span class="rating-score" th:text="${rating}">4.9</span>
+                <span class="rating-text">Rất tốt</span>
+                <span th:text="${reviewCount} + ' đánh giá'">1520 đánh giá</span>
+            </div>
+        </div>
+        <div class="hotel-action">
+            <a th:href="@{/user/home}" class="btn btn-outline-secondary">Quay lại</a>
+        </div>
+    </div>
+
+    <div class="hotel-detail-body">
+        <div class="hotel-summary">
+            <div class="hotel-image"></div>
+            <div class="hotel-info-card">
+                <h5>Thông tin khách sạn</h5>
+                <p th:text="${hotelDescription}">Khách sạn boutique sang trọng với tiện nghi đầy đủ.</p>
+                <div class="detail-grid">
+                    <div>
+                        <strong>Nhận phòng</strong>
+                        <p th:text="${checkIn}">09-04-2026</p>
+                    </div>
+                    <div>
+                        <strong>Trả phòng</strong>
+                        <p th:text="${checkOut}">17-04-2026</p>
+                    </div>
+                    <div>
+                        <strong>Số khách</strong>
+                        <p th:text="${guests}">2</p>
+                    </div>
+                    <div>
+                        <strong>Số phòng</strong>
+                        <p th:text="${rooms}">1</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="booking-panel">
+            <h5>Chi tiết đặt phòng</h5>
+            <div class="booking-row">
+                <span>Phòng</span>
+                <strong th:text="${roomType}">Deluxe Double Room</strong>
+            </div>
+            <div class="booking-row">
+                <span>Giá mỗi đêm</span>
+                <strong th:text="${#numbers.formatDecimal(pricePerNight, 0, 'COMMA', '.', '')} + ' VND'">899.000 VND</strong>
+            </div>
+            <div class="booking-row">
+                <span>Số đêm</span>
+                <strong th:text="${totalNights}">8</strong>
+            </div>
+            <div class="booking-row">
+                <span>Phí dịch vụ và thuế</span>
+                <strong th:text="${#numbers.formatDecimal(tax, 0, 'COMMA', '.', '')} + ' VND'">120.000 VND</strong>
+            </div>
+            <div class="booking-total">
+                <span>Tổng thanh toán</span>
+                <strong th:text="${#numbers.formatDecimal(bookingTotal, 0, 'COMMA', '.', '')} + ' VND'">7.412.000 VND</strong>
+            </div>
+            <a href="#" class="btn btn-primary w-100">Đặt ngay</a>
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragments :: scripts}"></div>
+</body>
+</html>

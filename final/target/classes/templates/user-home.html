@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('La Ca Hotel - Khách hàng')}"></head>
+<body>
+<div class="user-home-layout">
+    <section class="user-hero">
+        <div class="hero-content">
+            <div class="hero-copy">
+                <p class="subtitle">Khách sạn chính thức</p>
+                <h1 th:text="${hotelName}">La Ca Hotel Dalat</h1>
+                <p class="hero-text" th:text="${hotelDescription}">Khách sạn boutique cao cấp với phong cách Đà Lạt lãng mạn.</p>
+                <div class="hero-meta">
+                    <span><strong th:text="${rating}">4.9</strong> điểm</span>
+                    <span th:text="${reviewCount} + ' đánh giá'">1520 đánh giá</span>
+                    <span th:text="${availableRooms} + ' phòng trống'">20 phòng trống</span>
+                </div>
+                <div class="hero-actions">
+                    <a th:href="@{/user/hotel-detail(spec=${hotelSpec})}" class="btn btn-primary btn-lg">Xem chi tiết khách sạn</a>
+                    <a th:href="@{/user/hotel-detail(spec=${hotelSpec})}" class="btn btn-outline-light btn-lg">Đặt ngay</a>
+                </div>
+            </div>
+            <div class="hero-card">
+                <div class="search-panel">
+                    <h5>Tìm phòng nhanh</h5>
+                    <div class="search-row">
+                        <div>
+                            <label>Nhận phòng</label>
+                            <p>09-04-2026</p>
+                        </div>
+                        <div>
+                            <label>Trả phòng</label>
+                            <p>17-04-2026</p>
+                        </div>
+                    </div>
+                    <div class="search-row">
+                        <div>
+                            <label>Số khách</label>
+                            <p>8 khách</p>
+                        </div>
+                        <div>
+                            <label>Phòng</label>
+                            <p>1 phòng</p>
+                        </div>
+                    </div>
+                    <a th:href="@{/user/hotel-detail(spec=${hotelSpec})}" class="btn btn-primary w-100 mt-3">Hiển thị chi tiết</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="hotel-highlights">
+        <div class="section-header">
+            <h2>Tiện ích nổi bật</h2>
+            <p>Những tiện ích tốt nhất cho kỳ nghỉ của bạn.</p>
+        </div>
+        <div class="feature-grid">
+            <div th:each="feature : ${facilities}" class="feature-card">
+                <i class="bi bi-check-circle-fill"></i>
+                <span th:text="${feature}">Wifi miễn phí</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-rooms">
+        <div class="section-header">
+            <h2>Phòng nổi bật</h2>
+        </div>
+        <div class="room-grid user-room-grid">
+            <div th:each="room : ${topRooms}" class="room-card">
+                <div class="room-card-title">
+                    <h5 th:text="${room.roomNumber}">P101</h5>
+                    <span th:text="${room.category}">STANDARD</span>
+                </div>
+                <p th:text="${room.description}">Phòng tiêu chuẩn đầy đủ tiện nghi.</p>
+                <div class="room-card-footer">
+                    <span th:text="${#numbers.formatDecimal(room.pricePerNight, 0, 'COMMA', '.', '')} + ' VND/đêm'">500.000 VND/đêm</span>
+                    <a th:href="@{/user/hotel-detail(spec=${hotelSpec})}" class="btn btn-sm btn-outline-primary">Chọn phòng</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div th:replace="~{fragments :: scripts}"></div>
+</body>
+</html>

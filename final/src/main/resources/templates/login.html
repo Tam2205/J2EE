@@ -47,39 +47,35 @@
         <div class="text-center mb-4">
             <i class="bi bi-building hotel-icon"></i>
             <h2 class="mt-2">La Ca Hotel</h2>
-            <p class="text-muted">Dang nhap he thong quan ly</p>
+            <p class="text-muted">Đăng nhập hệ thống quản lí</p>
         </div>
 
         <div th:if="${param.error}" class="alert alert-danger">
-            <i class="bi bi-exclamation-triangle"></i> Sai ten dang nhap hoac mat khau!
+            <i class="bi bi-exclamation-triangle"></i> Sai tên đăng nhập hoặc mật khẩu!
         </div>
         <div th:if="${param.logout}" class="alert alert-success">
-            <i class="bi bi-check-circle"></i> Da dang xuat thanh cong!
+            <i class="bi bi-check-circle"></i> Đã đăng xuất thành công!
         </div>
 
         <form th:action="@{/login}" method="post">
             <div class="mb-3">
-                <label class="form-label fw-semibold">Ten dang nhap</label>
+                <label class="form-label fw-semibold">Tên đăng nhập</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-person"></i></span>
-                    <input type="text" name="username" class="form-control" placeholder="Nhap ten dang nhap" required autofocus>
+                    <input type="text" name="username" class="form-control" placeholder="Nhập tên đăng nhập" required autofocus>
                 </div>
             </div>
             <div class="mb-4">
-                <label class="form-label fw-semibold">Mat khau</label>
+                <label class="form-label fw-semibold">Mật khẩu</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                    <input type="password" name="password" class="form-control" placeholder="Nhap mat khau" required>
+                    <input type="password" name="password" class="form-control" placeholder="Nhập mật khẩu" required>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary btn-login w-100">
-                <i class="bi bi-box-arrow-in-right"></i> Dang nhap
+                <i class="bi bi-box-arrow-in-right"></i> Đăng nhập
             </button>
         </form>
-
-        <div class="text-center mt-3">
-            <small class="text-muted">Admin: admin / admin123 | Nhan vien: staff / staff123</small>
-        </div>
     </div>
 </body>
 </html>

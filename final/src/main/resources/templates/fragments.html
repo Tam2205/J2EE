@@ -19,29 +19,29 @@
     </div>
     <ul class="sidebar-nav">
         <li th:classappend="${activePage == 'dashboard' ? 'active' : ''}">
-            <a th:href="@{/}"><i class="bi bi-speedometer2"></i> <span>Tong quan</span></a>
+            <a th:href="@{/}"><i class="bi bi-speedometer2"></i> <span>Tổng quan</span></a>
         </li>
         <li th:classappend="${activePage == 'rooms' ? 'active' : ''}">
-            <a th:href="@{/rooms}"><i class="bi bi-door-open"></i> <span>Quan ly phong</span></a>
+            <a th:href="@{/rooms}"><i class="bi bi-door-open"></i> <span>Quản lý phòng</span></a>
         </li>
         <li th:classappend="${activePage == 'bookings' ? 'active' : ''}">
-            <a th:href="@{/bookings}"><i class="bi bi-calendar-check"></i> <span>Dat phong</span></a>
+            <a th:href="@{/bookings}"><i class="bi bi-calendar-check"></i> <span>Đặt phong</span></a>
         </li>
         <li th:classappend="${activePage == 'vehicles' ? 'active' : ''}">
-            <a th:href="@{/vehicles}"><i class="bi bi-scooter"></i> <span>Cho thue xe may</span></a>
+            <a th:href="@{/vehicles}"><i class="bi bi-scooter"></i> <span>Cho thuê xe máy</span></a>
         </li>
         <li th:classappend="${activePage == 'services' ? 'active' : ''}">
-            <a th:href="@{/services}"><i class="bi bi-star"></i> <span>Dich vu</span></a>
+            <a th:href="@{/services}"><i class="bi bi-star"></i> <span>Dịch vụ</span></a>
         </li>
         <li th:classappend="${activePage == 'activity-logs' ? 'active' : ''}" sec:authorize="hasRole('ADMIN')">
-            <a th:href="@{/activity-logs}"><i class="bi bi-clock-history"></i> <span>Nhat ky</span></a>
+            <a th:href="@{/activity-logs}"><i class="bi bi-clock-history"></i> <span>Nhật ký</span></a>
         </li>
     </ul>
     <div class="sidebar-footer mt-auto p-3 border-top">
         <small class="text-muted"><i class="bi bi-person-circle"></i> <span sec:authentication="name">User</span></small>
         <form th:action="@{/logout}" method="post" class="mt-2">
             <button type="submit" class="btn btn-outline-light btn-sm w-100">
-                <i class="bi bi-box-arrow-right"></i> Dang xuat
+                <i class="bi bi-box-arrow-right"></i> Đăng xuất
             </button>
         </form>
     </div>

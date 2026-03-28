@@ -4,3 +4,4 @@ java -jar target\laca-hotel-1.0-SNAPSHOT.jar
 lệnh tắt 
 Get-Process java -ErrorAction SilentlyContinue | Stop-Process -Force
 hoặc ctrl + C
+Admin: admin / admin123 | Nhan vien: staff / staff123
